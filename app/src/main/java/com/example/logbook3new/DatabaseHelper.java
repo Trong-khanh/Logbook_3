@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "CONTACTS";
     private static final String TABLE_NAME = "persons";
@@ -48,6 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+
+
     public String getDetails() {
         Cursor results = database.query(TABLE_NAME,
                 // Defines the query to execute
@@ -80,6 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return resultText;
     }
 
+
+
     public long insertDetails(String name, String dob, String email, int imageResourceId) {
         // ContentValues represents a single table row as a key/value map
         ContentValues rowValues = new ContentValues();
@@ -97,4 +105,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 rowValues
         );
     }
+
+    public List<Person> getAllPersons() {
+        List<Person> personList = new ArrayList<>();
+
+        Cursor results = database.query(TABLE_NAME,
+                new String[]{NAME_COLUMN, DOB_COLUMN, EMAIL_COLUMN, IMAGE_COLUMN},
+                null, null, null, null, NAME_COLUMN);
+
+        results.moveToFirst();
+
+        while (!results.isAfterLast()) {
+            String name = results.getString(0);
+            String dob = results.getString(1);
+            String email = results.getString(2);
+            int imageResourceId = results.getInt(3);
+
+            Person person = new Person(name, dob, email, imageResourceId);
+            personList.add(person);
+
+            results.moveToNext();
+        }
+
+        results.close();
+
+        return personList;
+    }
+
+
+
 }

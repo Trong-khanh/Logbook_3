@@ -19,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button saveDetailsButton = findViewById(R.id.saveDetailBtn);
+        Button detailBtn = findViewById(R.id.detailBtn);
 
-        saveDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveDetails();
-            }
+        saveDetailsButton.setOnClickListener(view -> saveDetails());
+
+        detailBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         // get the input values
         String name = nameTxt.getText().toString();
         String dob = dobTxt.getText().toString();
@@ -49,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (name.isEmpty() || dob.isEmpty() || email.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // validate image selection (radio button)
+        if (selectedImgId == -1) {
+            // No radio button selected
+            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -71,5 +80,6 @@ public class MainActivity extends AppCompatActivity {
         // Launch Details Activity
         Intent intent = new Intent(this, DetailsActivity.class);
         startActivity(intent);
+
     }
 }
