@@ -29,12 +29,15 @@ public class PersonAdapter extends ArrayAdapter<Person> {
         TextView textViewName = convertView.findViewById(R.id.textViewName);
         TextView textViewDob = convertView.findViewById(R.id.textViewDob);
         TextView textViewEmail = convertView.findViewById(R.id.textViewEmail);
+        TextView nameDisplay = convertView.findViewById(R.id.nameDisplay);
+        TextView dobDisplay = convertView.findViewById(R.id.dobDisplay);
+        TextView emailDisplay = convertView.findViewById(R.id.emailDisplay);
 
         // Populate the data into the template view using the data object
         imageView.setImageResource(person.getImageResourceId());
-        textViewName.setText("Name: " + person.getName());
-        textViewDob.setText("DOB: " + person.getDob());
-        textViewEmail.setText("Email: " + person.getEmail());
+        nameDisplay.setText(person.getName());
+        dobDisplay.setText(person.getDob());
+        emailDisplay.setText(person.getEmail());
 
         return convertView;
     }
